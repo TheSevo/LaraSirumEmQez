@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Histoire ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Polices élégantes depuis Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Contrôle de la musique -->
+    <button id="music-btn" class="music-btn">🎵 Jouer notre musique</button>
+    <audio id="bg-music" loop>
+        <source src="votre-musique.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Section d'accueil -->
+    <header class="hero">
+        <div class="hero-content fade-in">
+            <h1>Pour toi, mon amour</h1>
+            <p>Notre histoire à travers le temps...</p>
+            <div class="scroll-down">↓</div>
+        </div>
+    </header>
+
+    <!-- Timeline des souvenirs -->
+    <section class="timeline">
+        <!-- Souvenir 1 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre Rencontre</span>
+                <h2>Le premier regard</h2>
+                <p>Ce jour où tout a commencé. Je me souviens encore de la façon dont tu m'as souri...</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo1.jpg" alt="Notre rencontre" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 2 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre Premier Voyage</span>
+                <h2>Escapade inoubliable</h2>
+                <p>Des souvenirs gravés à jamais dans nos mémoires.</p>
+                <!-- Remplacez par votre vidéo -->
+                <video controls preload="metadata">
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Je t'aime ❤️</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
