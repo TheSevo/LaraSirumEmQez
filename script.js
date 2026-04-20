@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Compteur de jours de la relation
     // ⚠️ Modifiez cette date avec la date de votre rencontre (Année-Mois-Jour)
-    const dateRencontre = new Date("2021-06-15T00:00:00").getTime();
+    const dateRencontre = new Date("2022-08-12T16:50:00").getTime();
 
     function updateCounter() {
         const now = new Date().getTime();
