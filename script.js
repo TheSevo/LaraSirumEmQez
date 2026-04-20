@@ -42,4 +42,30 @@ document.addEventListener("DOMContentLoaded", () => {
     // Sélectionne tous les éléments avec la classe 'fade-in-scroll'
     const elementsToFadeIn = document.querySelectorAll(".fade-in-scroll");
     elementsToFadeIn.forEach(el => observer.observe(el));
+
+    // 3. Compteur de jours de la relation
+    // ⚠️ Modifiez cette date avec la date de votre rencontre (Année-Mois-Jour)
+    const dateRencontre = new Date("2021-06-15T00:00:00").getTime();
+
+    function updateCounter() {
+        const now = new Date().getTime();
+        const difference = now - dateRencontre;
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        const daysEl = document.getElementById("days");
+        if (daysEl) { // S'assure que les éléments existent sur la page
+            daysEl.innerText = days;
+            document.getElementById("hours").innerText = hours;
+            document.getElementById("minutes").innerText = minutes;
+            document.getElementById("seconds").innerText = seconds;
+        }
+    }
+
+    // Met à jour le compteur chaque seconde
+    setInterval(updateCounter, 1000);
+    updateCounter(); // Appel immédiat pour éviter le "0" au chargement
 });
