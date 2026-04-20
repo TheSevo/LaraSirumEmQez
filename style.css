@@ -15,10 +15,42 @@ h1, h2 {
     font-family: 'Playfair Display', serif;
 }
 
+/* Barre de Navigation */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 15px 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap: 2rem;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-family: 'Lora', serif;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: #d4af37;
+}
+
 /* Bouton Musique (Glassmorphism) */
 .music-btn {
     position: fixed;
-    top: 20px;
+    bottom: 20px;
     right: 20px;
     z-index: 1000;
     background: rgba(255, 255, 255, 0.85);
@@ -92,6 +124,63 @@ h1, h2 {
     0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
     40% { transform: translateX(-50%) translateY(-15px); }
     60% { transform: translateX(-50%) translateY(-7px); }
+}
+
+/* Titres de Sections Globaux */
+.section-title {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    color: #d4af37;
+    margin-bottom: 4rem;
+}
+
+/* Compteur de Temps */
+.counter-section {
+    text-align: center;
+    padding: 6rem 20px;
+    background: white;
+}
+
+.counter-section h2 {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 2.5rem;
+}
+
+.time-counter {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.time-box {
+    background: #faf8f5;
+    border: 1px solid #eaeaea;
+    padding: 20px;
+    border-radius: 15px;
+    min-width: 120px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    color: #777;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.time-box span {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #d4af37;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 5px;
+}
+
+.counter-note {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-top: 1rem;
 }
 
 /* Timeline */
@@ -201,6 +290,73 @@ h1, h2 {
     transform: translateY(0);
 }
 
+/* Galerie */
+.gallery {
+    padding: 6rem 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.gallery-grid img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+}
+
+.gallery-grid img:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* Lettre d'amour */
+.letter-section {
+    padding: 6rem 20px;
+    display: flex;
+    justify-content: center;
+    background: white;
+}
+
+.letter-content {
+    max-width: 800px;
+    text-align: center;
+    padding: 4rem;
+    background: #faf8f5;
+    border: 1px solid #eaeaea;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+
+.letter-content h2 {
+    color: #d4af37;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.letter-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 1.5rem;
+}
+
+.letter-content .signature {
+    margin-top: 3rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-style: italic;
+    color: #d4af37;
+}
+
 footer {
     text-align: center;
     padding: 4rem 2rem;
@@ -213,6 +369,12 @@ footer {
 
 /* Responsive pour les téléphones */
 @media (max-width: 768px) {
+    .navbar ul {
+        gap: 1rem;
+        font-size: 0.9rem;
+        padding: 0 10px;
+    }
+
     .timeline::before {
         left: 30px; /* Aligne la ligne sur la gauche sur mobile */
     }
@@ -228,5 +390,8 @@ footer {
     .memory-content {
         width: 100%;
         padding: 1.5rem;
+    }
+    .letter-content {
+        padding: 2.5rem 1.5rem;
     }
 }
