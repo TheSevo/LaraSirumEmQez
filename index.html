@@ -9,6 +9,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Menu de navigation -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#histoire">Notre Histoire</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+            <li><a href="#lettre">Mots d'Amour</a></li>
+        </ul>
+    </nav>
+
     <!-- Contrôle de la musique -->
     <button id="music-btn" class="music-btn">🎵 Jouer notre musique</button>
     <audio id="bg-music" loop>
@@ -16,7 +26,7 @@
     </audio>
 
     <!-- Section d'accueil -->
-    <header class="hero">
+    <header id="accueil" class="hero">
         <div class="hero-content fade-in">
             <h1>Pour toi, mon amour</h1>
             <p>Notre histoire à travers le temps...</p>
@@ -24,8 +34,21 @@
         </div>
     </header>
 
+    <!-- Compteur de temps -->
+    <section class="counter-section fade-in-scroll">
+        <h2>Nous nous aimons depuis</h2>
+        <div class="time-counter">
+            <div class="time-box"><span id="days">0</span>Jours</div>
+            <div class="time-box"><span id="hours">0</span>Heures</div>
+            <div class="time-box"><span id="minutes">0</span>Minutes</div>
+            <div class="time-box"><span id="seconds">0</span>Secondes</div>
+        </div>
+        <p class="counter-note">(Modifiez la date de rencontre dans script.js)</p>
+    </section>
+
     <!-- Timeline des souvenirs -->
-    <section class="timeline">
+    <section id="histoire" class="timeline">
+        <h2 class="section-title fade-in-scroll">Notre Histoire</h2>
         <!-- Souvenir 1 aligné à droite -->
         <div class="memory right fade-in-scroll">
             <div class="memory-content">
@@ -48,6 +71,40 @@
                     <source src="video1.mp4" type="video/mp4">
                 </video>
             </div>
+        </div>
+
+        <!-- Souvenir 3 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre Premier Anniversaire</span>
+                <h2>Une soirée parfaite</h2>
+                <p>Un an de bonheur à tes côtés. Et ce n'est que le début.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo2.jpg" alt="Premier anniversaire" loading="lazy">
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerie Photos -->
+    <section id="galerie" class="gallery fade-in-scroll">
+        <h2 class="section-title">Nos Meilleurs Moments</h2>
+        <div class="gallery-grid">
+            <img src="galerie1.jpg" alt="Souvenir" loading="lazy">
+            <img src="galerie2.jpg" alt="Souvenir" loading="lazy">
+            <img src="galerie3.jpg" alt="Souvenir" loading="lazy">
+            <img src="galerie4.jpg" alt="Souvenir" loading="lazy">
+            <img src="galerie5.jpg" alt="Souvenir" loading="lazy">
+            <img src="galerie6.jpg" alt="Souvenir" loading="lazy">
+        </div>
+    </section>
+
+    <!-- Lettre d'amour -->
+    <section id="lettre" class="letter-section fade-in-scroll">
+        <div class="letter-content">
+            <h2>Mon Amour,</h2>
+            <p>J'ai créé ce site pour garder une trace de tous ces moments magiques que nous passons ensemble. Chaque jour à tes côtés est une nouvelle aventure et je voulais te montrer à quel point tu comptes pour moi.</p>
+            <p>Peu importe où la vie nous mène, je veux continuer à remplir ces pages avec toi, créer de nouveaux souvenirs et construire notre avenir.</p>
+            <p class="signature">Je t'aime, infiniment.</p>
         </div>
     </section>
 
