@@ -62,12 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Passage automatique à la musique suivante à la fin de la piste
         bgMusic.addEventListener("ended", () => {
-            let currentIndex = -1;
-            playlistItems.forEach((item, index) => {
-                if (item.classList.contains("active")) {
-                    currentIndex = index;
-                }
-            });
+            // Optimization: Find the currently active item directly
+            const activeItem = document.querySelector("#playlist-menu li.active");
+            const currentIndex = activeItem ? Array.from(playlistItems).indexOf(activeItem) : -1;
 
             if (currentIndex !== -1) {
                 const nextIndex = (currentIndex + 1) % playlistItems.length;
@@ -85,14 +82,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Mise à jour de la barre de progression
         bgMusic.addEventListener("timeupdate", () => {
-            if (bgMusic.duration) {
+            if (bgMusic.duration && audioProgress && currentTimeEl) {
                 audioProgress.value = (bgMusic.currentTime / bgMusic.duration) * 100;
                 currentTimeEl.textContent = formatTime(bgMusic.currentTime);
             }
         });
 
         bgMusic.addEventListener("loadedmetadata", () => {
-            totalTimeEl.textContent = formatTime(bgMusic.duration);
+            if (totalTimeEl) {
+                totalTimeEl.textContent = formatTime(bgMusic.duration);
+            }
         });
 
         // Avancer/Reculer manuellement avec la barre
