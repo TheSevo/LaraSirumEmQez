@@ -4,15 +4,136 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth; /* Défilement fluide pour les liens du menu */
+}
+
 body {
     font-family: 'Lora', serif;
     background-color: #faf8f5;
     color: #333;
     overflow-x: hidden;
+    transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+body.locked {
+    overflow: hidden;
 }
 
 h1, h2 {
     font-family: 'Playfair Display', serif;
+}
+
+/* Barre de progression de défilement */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: #d4af37;
+    width: 0%;
+    z-index: 1002;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #faf8f5;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #d4af37;
+    border-radius: 10px;
+    border: 3px solid #faf8f5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #bfa133;
+}
+
+/* Overlay Mot de Passe */
+.password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #faf8f5;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.password-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.password-box {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.password-box h2 {
+    color: #d4af37;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.password-box p {
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.password-box input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-family: 'Lora', serif;
+    font-size: 1rem;
+    outline: none;
+    text-align: center;
+}
+
+.password-box input:focus {
+    border-color: #d4af37;
+}
+
+.password-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: #d4af37;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: 'Lora', serif;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.password-box button:hover {
+    background-color: #bfa133;
+}
+
+.error-msg {
+    color: #e74c3c !important;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    margin-bottom: 0 !important;
+    display: none;
 }
 
 /* Barre de Navigation */
@@ -26,11 +147,17 @@ h1, h2 {
     -webkit-backdrop-filter: blur(10px);
     padding: 15px 0;
     box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    transition: transform 0.4s ease, background-color 0.8s ease;
+}
+
+.navbar.hidden-scroll {
+    transform: translateY(-100%); /* Cache la barre vers le haut */
 }
 
 .navbar ul {
     display: flex;
     justify-content: center;
+    align-items: center;
     list-style: none;
     gap: 2rem;
 }
@@ -47,12 +174,140 @@ h1, h2 {
     color: #d4af37;
 }
 
-/* Bouton Musique (Glassmorphism) */
-.music-btn {
+/* Bouton Thème (Lune/Soleil) */
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    width: 1.5em;
+    height: 1.5em;
+    overflow: hidden; /* Masque ce qui sort du bouton */
+    border-radius: 50%; /* Donne un effet de fenêtre céleste ronde */
+}
+
+/* Conteneur et texte 'Essaye le mode nuit' */
+.theme-toggle-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.night-mode-hint {
+    position: absolute;
+    top: calc(100% + 15px); /* Descendu pour plus d'espace */
+    left: 50%;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    color: #fff; /* Couleur blanche */
+    font-weight: 600; /* Texte plus épais */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    /* Grand effet blurry sombre (Glassmorphism) */
+    background: rgba(0, 0, 0, 0.35); 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-style: italic;
+    pointer-events: none; /* Empêche de bloquer les clics */
+    animation: pointToButton 1.5s infinite ease-in-out;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.night-mode-hint::before {
+    content: '↑';
+    display: block;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+@keyframes pointToButton {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* Conteneur interne */
+.theme-toggle-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Faces avant (Lune) et arrière (Soleil) */
+.theme-front, .theme-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+
+/* --- MODE JOUR --- */
+/* Le soleil est au centre de notre "fenêtre" */
+.theme-front {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+}
+
+/* La lune est cachée plus haut dans le ciel, prête à descendre */
+.theme-back {
+    transform: translateY(-150%) rotate(75deg);
+    opacity: 0;
+}
+
+/* --- MODE NUIT (Animation de rotation céleste) --- */
+/* Le soleil "se couche" : il descend et tourne hors de la fenêtre */
+body.night-mode .theme-front {
+    transform: translateY(150%) rotate(-90deg);
+    opacity: 0;
+}
+
+/* La lune "se lève" (vient prendre sa place) : elle descend depuis le haut */
+body.night-mode .theme-back {
+    transform: translateY(0) rotate(-15deg);
+    opacity: 1;
+}
+
+/* Animation pour attirer l'attention sur le mode nuit */
+body:not(.night-mode) .theme-toggle {
+    animation: suggestNightMode 4s infinite;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.2);
+    animation: none !important; /* Stoppe l'animation au survol */
+}
+
+@keyframes suggestNightMode {
+    0%, 40%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 0 rgba(212, 175, 55, 0)); }
+    10% { transform: scale(1.2) rotate(-15deg); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8)); }
+    20% { transform: scale(1.2) rotate(10deg); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8)); }
+    30% { transform: scale(1.2) rotate(-5deg); filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8)); }
+}
+
+/* Playlist et Musique */
+.playlist-container {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 1000;
+}
+
+.music-btn {
     background: rgba(255, 255, 255, 0.85);
     border: 1px solid #eaeaea;
     padding: 12px 24px;
@@ -83,6 +338,120 @@ h1, h2 {
     100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
 }
 
+.playlist-menu {
+    position: absolute;
+    bottom: calc(100% + 15px);
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid #eaeaea;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    padding: 10px 0 0 0;
+    overflow: hidden;
+    min-width: 240px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.playlist-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.playlist-menu ul {
+    list-style: none;
+}
+
+.playlist-menu li {
+    padding: 12px 40px 12px 20px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    color: #555;
+    transition: background 0.2s, color 0.2s;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.playlist-menu li:last-child {
+    border-bottom: none;
+}
+
+.playlist-menu li:hover {
+    background: #faf8f5;
+    color: #d4af37;
+}
+
+.playlist-menu li.active {
+    color: #d4af37;
+    font-weight: bold;
+}
+
+.song-name {
+    font-weight: 500;
+}
+
+.playlist-menu li.playing-anim::after {
+    content: '🎵';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    margin-top: -10px;
+    animation: musicBounce 0.5s infinite alternate ease-in-out;
+}
+
+@keyframes musicBounce {
+    0% { transform: translateY(0) scale(1) rotate(-10deg); }
+    100% { transform: translateY(-4px) scale(1.1) rotate(10deg); }
+}
+
+/* Contrôles Audio (Barre de progression) */
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-top: 1px solid #eaeaea;
+    background: #faf8f5;
+}
+
+.audio-controls span {
+    font-size: 0.8rem;
+    color: #777;
+    font-family: 'Lora', serif;
+    min-width: 35px;
+    text-align: center;
+}
+
+#audio-progress {
+    flex-grow: 1;
+    cursor: pointer;
+    height: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+    background: #ddd;
+    border-radius: 2px;
+    outline: none;
+}
+
+#audio-progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #d4af37;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 /* Hero Section */
 .hero {
     height: 100vh;
@@ -90,11 +459,108 @@ h1, h2 {
     align-items: center;
     justify-content: center;
     text-align: center;
-    /* Ajoutez une belle photo de vous deux en arrière-plan ici */
-    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('background-hero.jpg') center/cover no-repeat;
+    /* Arrière-plan : Ciel bleu et nuages 100% en CSS */
+    background-color: #87ceeb;
+    background-image: 
+        /* Assombrissement léger pour la lisibilité et dégradé du ciel */
+        linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)),
+        linear-gradient(to bottom, #4a90e2 0%, #87ceeb 100%);
     background-attachment: fixed;
     color: white;
     position: relative;
+    overflow: hidden; /* Empêche les nuages de dépasser de l'écran */
+}
+
+/* --- Définition de la forme totale du Nuage Unique --- */
+.cloud {
+    position: absolute;
+    width: 400px;
+    height: 150px;
+    background-image: 
+        radial-gradient(circle at 71.5% 61.8%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 1.8%, rgba(255, 255, 255, 0) 3.6%),
+        radial-gradient(circle at 76% 60%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.7) 2.7%, rgba(255, 255, 255, 0) 4.5%),
+        radial-gradient(circle at 79.6% 57.3%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.8) 3.6%, rgba(255, 255, 255, 0) 5.4%),
+        radial-gradient(circle at 84.1% 59.1%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.75) 2.7%, rgba(255, 255, 255, 0) 4.5%),
+        radial-gradient(circle at 88.6% 60.9%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.6) 1.8%, rgba(255, 255, 255, 0) 3.6%),
+        radial-gradient(ellipse at 76% 62.7%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.75) 5.4%, rgba(255, 255, 255, 0) 8.1%),
+        radial-gradient(ellipse at 84.1% 62.7%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.75) 5.4%, rgba(255, 255, 255, 0) 8.1%),
+        radial-gradient(ellipse at 80% 63.2%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.8) 5.4%, rgba(255, 255, 255, 0) 8.1%);
+    background-repeat: no-repeat;
+    z-index: 0;
+    pointer-events: none; /* Empêche les nuages de bloquer vos clics */
+    left: -450px; /* Position de départ hors de l'écran à gauche */
+    animation: driftClouds var(--duration) linear infinite;
+    animation-delay: var(--delay); /* Décale le départ pour qu'ils soient déjà répartis */
+    transform: scale(var(--scale));
+    opacity: var(--opacity);
+}
+
+/* --- Les 7 Nuages : Vitesse, Opacité et Échelle (Effet de profondeur) --- */
+.cloud-1 {
+    top: 10%;
+    --scale: 0.7;
+    --opacity: 0.6;
+    --duration: 45s;
+    --delay: -10s;
+}
+
+.cloud-2 {
+    top: 15%;
+    --scale: 0.9;
+    --opacity: 0.85;
+    --duration: 35s;
+    --delay: -25s;
+}
+
+.cloud-3 {
+    top: 5%;
+    --scale: 1.1;
+    --opacity: 1;
+    --duration: 25s;
+    --delay: -15s;
+}
+
+.cloud-4 {
+    top: 45%;
+    --scale: 0.6;
+    --opacity: 0.5;
+    --duration: 55s;
+    --delay: -30s;
+}
+
+.cloud-5 {
+    top: 40%;
+    --scale: 0.8;
+    --opacity: 0.75;
+    --duration: 40s;
+    --delay: -5s;
+}
+
+.cloud-6 {
+    top: 75%;
+    --scale: 1.0;
+    --opacity: 0.9;
+    --duration: 30s;
+    --delay: -20s;
+}
+
+.cloud-7 {
+    top: 80%;
+    --scale: 0.5;
+    --opacity: 0.4;
+    --duration: 60s;
+    --delay: -40s;
+}
+
+/* --- Animation de dérive des nuages --- */
+@keyframes driftClouds {
+    0% { transform: translateX(0) scale(var(--scale)); }
+    100% { transform: translateX(calc(100vw + 900px)) scale(var(--scale)); }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1; /* S'assure que le texte reste au-dessus des nuages */
 }
 
 .hero-content h1 {
@@ -108,16 +574,6 @@ h1, h2 {
     font-size: 1.5rem;
     opacity: 0.9;
     letter-spacing: 1px;
-}
-
-.scroll-down {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 2rem;
-    animation: bounce 2s infinite;
-    opacity: 0.8;
 }
 
 @keyframes bounce {
@@ -138,7 +594,7 @@ h1, h2 {
 .counter-section {
     text-align: center;
     padding: 6rem 20px;
-    background: white;
+    background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.95)), url('fond-compteur.jpg') center/cover no-repeat fixed;
 }
 
 .counter-section h2 {
@@ -183,10 +639,15 @@ h1, h2 {
     margin-top: 1rem;
 }
 
+/* Section Histoire */
+.histoire-section {
+    padding-top: 6rem;
+}
+
 /* Timeline */
 .timeline {
     max-width: 1000px;
-    margin: 6rem auto;
+    margin: 0 auto 6rem;
     padding: 0 20px;
     position: relative;
 }
@@ -195,27 +656,39 @@ h1, h2 {
 .timeline::before {
     content: '';
     position: absolute;
-    top: 0;
+    top: 30px;
     left: 50%;
     width: 2px;
-    height: 100%;
+    height: calc(100% - 30px);
     background: #d4af37; /* Or doux similaire à votre ancien projet */
     transform: translateX(-50%);
     opacity: 0.5;
 }
 
+/* Flèche pointant vers le bas à la fin */
+.timeline::after {
+    content: '↓';
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    color: #d4af37;
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+    opacity: 0.8;
+}
+
 .memory {
     display: flex;
     justify-content: flex-end;
-    padding-right: 50%;
+    padding-right: calc(50% + 30px);
     position: relative;
     margin-bottom: 5rem;
 }
 
 .memory.right {
     justify-content: flex-start;
+    padding-left: calc(50% + 30px);
     padding-right: 0;
-    padding-left: 50%;
 }
 
 /* Points dorés sur la ligne temporelle */
@@ -249,7 +722,7 @@ h1, h2 {
 
 .memory-content:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 50px rgba(212, 175, 55, 0.2);
 }
 
 .memory-content img, .memory-content video {
@@ -269,6 +742,14 @@ h1, h2 {
     font-size: 0.85rem;
 }
 
+.location {
+    display: inline-block;
+    color: #888;
+    font-size: 0.85rem;
+    margin-left: 10px;
+    font-style: italic;
+}
+
 /* Animations au chargement et au scroll */
 .fade-in {
     animation: fadeInIntro 2s ease-out forwards;
@@ -281,13 +762,13 @@ h1, h2 {
 
 .fade-in-scroll {
     opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transform: translateY(40px) scale(0.98);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .fade-in-scroll.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 /* Galerie */
@@ -309,13 +790,68 @@ h1, h2 {
     object-fit: cover;
     border-radius: 15px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, filter 0.25s ease-out;
+    filter: grayscale(60%) contrast(1.1); /* Effet nostalgique */
     cursor: pointer;
 }
 
 .gallery-grid img:hover {
     transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.3);
+    filter: grayscale(0%) contrast(1); /* Révélation des couleurs */
+}
+
+/* Lightbox (Plein écran pour images) */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.lightbox.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90vh;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    transform: scale(0.95);
+    transition: transform 0.4s ease;
+}
+
+.lightbox.show img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 3rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    line-height: 1;
+}
+
+.lightbox-close:hover {
+    color: #d4af37;
 }
 
 /* Lettre d'amour */
@@ -323,7 +859,7 @@ h1, h2 {
     padding: 6rem 20px;
     display: flex;
     justify-content: center;
-    background: white;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), url('fond-lettre.jpg') center/cover no-repeat fixed;
 }
 
 .letter-content {
@@ -359,7 +895,7 @@ h1, h2 {
 
 footer {
     text-align: center;
-    padding: 4rem 2rem;
+    padding: 1.5rem 2rem;
     background: #2c2c2c;
     color: white;
     font-family: 'Playfair Display', serif;
@@ -367,23 +903,255 @@ footer {
     font-style: italic;
 }
 
+/* --- MODE NUIT (Ciel étoilé) --- */
+body.night-mode {
+    background-color: #0c101c; /* Bleu nuit très profond */
+    color: #e0e6ed;
+}
+
+/* Calque 1 : Étoiles de base (fixes) */
+body.night-mode::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 130px 80px, #ffffff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: fadeSkyIn 1s ease-out;
+}
+
+/* Calque 2 : Étoiles scintillantes */
+body.night-mode::after {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1.5px 1.5px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 160px 120px, #ffffff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 190px 180px, #ffffff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 250px 250px;
+    animation: fadeSkyIn 1s ease-out, twinkleStars 4s 1s ease-in-out infinite alternate;
+}
+
+@keyframes fadeSkyIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes twinkleStars {
+    0% { opacity: 0.1; }
+    100% { opacity: 1; }
+}
+
+/* --- Étoiles Filantes --- */
+.shooting-stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    display: none; /* Cacher en mode jour */
+}
+
+body.night-mode .shooting-stars {
+    display: block; /* Afficher en mode nuit */
+}
+
+.shooting-stars span {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1), 0 0 8px rgba(255, 255, 255, 0.8), 0 0 20px #fff;
+    opacity: 0;
+    animation: shootingStar linear infinite;
+}
+
+/* Filet lumineux (la queue de l'étoile) */
+.shooting-stars span::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    width: 150px;
+    height: 1px;
+    background: linear-gradient(90deg, #fff, transparent);
+}
+
+/* Animation : traverse l'écran et reste cachée pendant le reste de la boucle */
+@keyframes shootingStar {
+    0% { transform: rotate(-45deg) translateX(0); opacity: 0; }
+    5% { opacity: 1; }
+    15% { transform: rotate(-45deg) translateX(-1200px); opacity: 0; }
+    100% { transform: rotate(-45deg) translateX(-1200px); opacity: 0; }
+}
+
+/* Positionnement et timings distincts pour créer un effet aléatoire */
+.shooting-stars span:nth-child(1) { top: 15%; left: 80%; animation-duration: 8s; animation-delay: 0s; }
+.shooting-stars span:nth-child(2) { top: 30%; left: 95%; animation-duration: 12s; animation-delay: 4s; }
+.shooting-stars span:nth-child(3) { top: -5%; left: 60%; animation-duration: 15s; animation-delay: 7s; }
+.shooting-stars span:nth-child(4) { top: 10%; left: 40%; animation-duration: 10s; animation-delay: 2s; }
+
+/* Cache le ciel de jour sur l'accueil pour laisser voir les étoiles du fond */
+body.night-mode .hero {
+    background-image: none;
+    background-color: transparent;
+}
+
+body.night-mode .cloud {
+    display: none; /* Cache les nuages en mode nuit */
+}
+
+/* Adaptation de la barre de défilement (Scrollbar) */
+html.night-mode ::-webkit-scrollbar-track {
+    background: #0c101c;
+}
+
+html.night-mode ::-webkit-scrollbar-thumb {
+    border-color: #0c101c;
+}
+
+/* Adaptation de la barre de navigation */
+body.night-mode .navbar { background: rgba(12, 16, 28, 0.85); }
+body.night-mode .navbar a { color: #e0e6ed; }
+body.night-mode .navbar a:hover { color: #d4af37; }
+
+/* Disparition de l'indice une fois le mode nuit activé */
+body.night-mode .night-mode-hint { opacity: 0; visibility: hidden; }
+
+/* Adaptation des cadres (souvenirs, lettre, compteur) */
+body.night-mode .memory-content, 
+body.night-mode .letter-content, 
+body.night-mode .time-box,
+body.night-mode .password-box {
+    background: rgba(20, 26, 42, 0.85);
+    border-color: #1e273f;
+    color: #cbd5e1;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+}
+
+body.night-mode .letter-content p, body.night-mode .password-box p { color: #cbd5e1; }
+body.night-mode .time-box { color: #94a3b8; }
+body.night-mode .counter-section h2 { color: #e0e6ed; }
+body.night-mode .location { color: #94a3b8; }
+
+/* Adaptation du fond des sections */
+body.night-mode .counter-section {
+    background: linear-gradient(rgba(12, 16, 28, 0.85), rgba(12, 16, 28, 0.95)), url('fond-compteur.jpg') center/cover no-repeat fixed;
+}
+
+body.night-mode .letter-section {
+    background: linear-gradient(rgba(5, 7, 12, 0.85), rgba(5, 7, 12, 0.95)), url('fond-lettre.jpg') center/cover no-repeat fixed;
+}
+
+/* Adaptation de l'écran de mot de passe */
+body.night-mode .password-overlay { background: #0c101c; }
+body.night-mode .password-box input { background: #0c101c; color: #fff; border-color: #2a3655; }
+
+/* Adaptation de la playlist */
+body.night-mode .music-btn {
+    background: rgba(20, 26, 42, 0.85);
+    color: #e0e6ed;
+    border-color: #1e273f;
+}
+body.night-mode .music-btn:hover { background: #1e273f; }
+
+body.night-mode .playlist-menu { background: rgba(20, 26, 42, 0.95); border-color: #1e273f; }
+body.night-mode .playlist-menu li { color: #cbd5e1; border-bottom-color: #1e273f; }
+body.night-mode .playlist-menu li:hover { background: #0c101c; color: #d4af37; }
+
+/* Adaptation des contrôles audio (nuit) */
+body.night-mode .audio-controls { background: rgba(20, 26, 42, 0.95); border-color: #1e273f; }
+body.night-mode #audio-progress { background: #2a3655; }
+
 /* Responsive pour les téléphones */
 @media (max-width: 768px) {
+    /* --- Polices générales --- */
+    .hero-content h1 {
+        font-size: clamp(2.5rem, 12vw, 3.5rem); /* Titre plus adapté au mobile */
+    }
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+    .counter-section h2 {
+        font-size: 1.8rem; /* Titre du compteur plus petit */
+    }
+    .letter-content p {
+        font-size: 1.1rem; /* Texte de la lettre légèrement plus petit */
+        line-height: 1.7;
+    }
+    footer {
+        font-size: 1.2rem; /* Taille du footer réduite */
+        padding: 1.5rem 1rem;
+    }
+
+    /* --- Sections et Conteneurs --- */
+    .counter-section, .gallery, .letter-section, .histoire-section {
+        padding-top: 4rem; /* Espacement des sections réduit */
+        padding-bottom: 4rem;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .password-box {
+        padding: 2rem; /* Moins de padding dans la boite de mot de passe */
+    }
+
+    /* --- Barre de navigation --- */
     .navbar ul {
         gap: 1rem;
-        font-size: 0.9rem;
+        font-size: 0.8rem; /* Police du menu plus petite */
         padding: 0 10px;
     }
 
-    .timeline::before {
-        left: 30px; /* Aligne la ligne sur la gauche sur mobile */
+    /* --- Animation 'Essaye le mode nuit' adaptée au mobile --- */
+    .night-mode-hint {
+        top: calc(100% + 5px); /* Place le texte en dessous du bouton */
+        font-size: 0.75rem;
+        animation: pointToButtonMobile 1.5s infinite ease-in-out;
+    }
+    @keyframes pointToButtonMobile {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-3px); }
+    }
+
+    /* --- Compteur --- */
+    .time-counter {
+        gap: 10px; /* Espace entre les boites réduit */
+    }
+    .time-box {
+        padding: 15px;
+        min-width: 100px; /* Largeur minimum réduite */
+    }
+    .time-box span {
+        font-size: 2rem; /* Chiffres plus petits */
+    }
+
+    /* --- Timeline --- */
+    .timeline {
+        padding: 0; /* On gère le padding dans la section parente */
+    }
+    .timeline::before, .timeline::after {
+        left: 20px; /* Rapproche la ligne du bord */
     }
     .memory::after, .memory.right::after {
-        left: 22px; /* Aligne le point avec la ligne (30px - 8px) */
+        left: 12px; /* Aligne le point avec la nouvelle ligne (20px - 8px) */
         right: auto;
     }
     .memory, .memory.right {
-        padding-left: 70px;
+        padding-left: 55px; /* Réduit l'espace entre la ligne et le contenu */
         padding-right: 0;
         justify-content: flex-start;
     }
@@ -391,7 +1159,9 @@ footer {
         width: 100%;
         padding: 1.5rem;
     }
+
+    /* --- Lettre d'amour --- */
     .letter-content {
-        padding: 2.5rem 1.5rem;
+        padding: 2rem 1.5rem;
     }
 }

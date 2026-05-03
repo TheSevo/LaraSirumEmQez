@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Histoire  ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Balises pour l'aperçu du lien (iMessage, WhatsApp, etc.) -->
+    <meta property="og:title" content="Pour toi, mon amour ❤️">
+    <meta property="og:description" content="Une petite surprise pour toi... Entre notre mot secret pour découvrir notre histoire.">
+    <meta property="og:image" content="background-hero.jpg"> <!-- L'image qui apparaîtra dans le message -->
+    <meta property="og:type" content="website">
+    <!-- Icône de l'onglet du navigateur (Favicon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    <!-- Polices élégantes depuis Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="locked">
+    <!-- Étoiles filantes (visibles uniquement en mode nuit) -->
+    <div class="shooting-stars">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- Barre de progression au scroll -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Overlay de Mot de Passe -->
+    <div id="password-overlay" class="password-overlay">
+        <div class="password-box">
+            <h2>Pour toi seulement ❤️</h2>
+            <p>What are the exact 2 emojis I send you everytime we go to sleep ?</p>
+            <form id="password-form">
+                <input type="password" id="secret-password" placeholder="Mot de passe" aria-label="Mot de passe" required>
+                <button type="submit">Entrer</button>
+            </form>
+            <p id="password-error" class="error-msg">Mot de passe incorrect, réessayez mon amour.</p>
+        </div>
+    </div>
+
+    <!-- Menu de navigation -->
+    <nav class="navbar">
+        <ul>
+            <li><a href="#accueil">Accueil</a></li>
+            <li><a href="#histoire">Notre Histoire</a></li>
+            <li><a href="#galerie">Galerie</a></li>
+            <li><a href="#lettre">Mots d'Amour</a></li>
+            <li>
+                <div class="theme-toggle-wrapper">
+                    <span class="night-mode-hint">Essaye le mode nuit ✨</span>
+                    <button id="theme-toggle" class="theme-toggle" title="Changer d'ambiance">
+                        <div class="theme-toggle-inner">
+                            <span class="theme-front">☀️</span>
+                            <span class="theme-back">🌙</span>
+                        </div>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Contrôle de la playlist -->
+    <div class="playlist-container">
+        <div id="playlist-menu" class="playlist-menu">
+            <ul>
+                <!-- Remplacez les src par les chemins de vos musiques -->
+                <li data-src="New West Those Eyes.mp3">
+                    <span class="song-name">🎵 New West - Those Eyes</span>
+                </li>
+                <li data-src="Ed Sheeran - Perfect.mp3">
+                    <span class="song-name">🎵 Ed Sheeran - Perfect</span>
+                </li>
+                <li data-src="Ruth B. - Dandelions.mp3">
+                    <span class="song-name">🎵 Ruth B. - Dandelions </span>
+                </li>
+                <li data-src="Naïka - SOLEIL.mp3">
+                    <span class="song-name">🎵 Naïka - SOLEIL</span>
+                </li>
+                <li data-src="Stephen Sanchez - Until I Found You.mp3">
+                    <span class="song-name">🎵 Stephen Sanchez - Until I Found You</span>
+                </li>
+            </ul>
+            <!-- Contrôles audio (Barre de progression) -->
+            <div class="audio-controls">
+                <span id="current-time">0:00</span>
+                <input type="range" id="audio-progress" min="0" max="100" value="0" aria-label="Progression de la musique">
+                <span id="total-time">0:00</span>
+            </div>
+        </div>
+        <button id="playlist-btn" class="music-btn">🎵 Notre playlist</button>
+    </div>
+    <audio id="bg-music"></audio>
+
+    <!-- Section d'accueil -->
+    <header id="accueil" class="hero">
+        <!-- Nuages animables et redimensionnables -->
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+        <div class="cloud cloud-4"></div>
+        <div class="cloud cloud-5"></div>
+        <div class="cloud cloud-6"></div>
+        <div class="cloud cloud-7"></div>
+        <div class="hero-content fade-in">
+            <h1>Pour toi, mon amour</h1>
+            <p>Notre histoire à travers le temps...</p>
+        </div>
+    </header>
+
+    <!-- Compteur de temps -->
+    <section class="counter-section fade-in-scroll">
+        <h2>Nous nous aimons depuis</h2>
+        <div class="time-counter">
+            <div class="time-box"><span id="days">0</span>Jours</div>
+            <div class="time-box"><span id="hours">0</span>Heures</div>
+            <div class="time-box"><span id="minutes">0</span>Minutes</div>
+            <div class="time-box"><span id="seconds">0</span>Secondes</div>
+        </div>
+    </section>
+
+    <!-- Timeline des souvenirs -->
+    <section id="histoire" class="histoire-section">
+        <h2 class="section-title fade-in-scroll">Notre Histoire</h2>
+        <div class="timeline">
+        <!-- Souvenir 1 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre Rencontre</span>
+                <span class="location">📍 Stepanakert</span>
+                <h2>Day One</h2>
+                <p>Le jour où tout a commencé.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo1.jpg" alt="Notre rencontre" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 2 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre Premier Date</span>
+                <span class="location">📍 Stepanakert</span>
+                <h2>Escapade inoubliable</h2>
+                <p>Une aventure gravées à jamais dans nos mémoires.</p>
+                <!-- Remplacez par votre vidéo -->
+                <video controls preload="metadata">
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <!-- Souvenir 3 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre Première Photo</span>
+                <span class="location">📍 Stepanakert</span>
+                <h2>Une soirée parfaite</h2>
+                <p>La fin approche mais ce n'est que le début.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo2.jpg" alt="Premier anniversaire" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 4 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Les Retrouvailles</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>Un moment magique</h2>
+                <p>Car rien ne peut nous séparer.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo3.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 5 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre Premier Date en couple</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>L'Amour Incontrôlable</h2>
+                <p>Le premier d'une longue série.</p>
+                <!-- Remplacez par votre photo -->
+                <video controls preload="metadata">
+                    <source src="video2.mp4" type="video/mp4">
+                </video>
+            </div>  
+        </div>
+
+        <!-- Souvenir 6 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Futur</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>Notre Avenir</h2>
+                <p>Le futur et le présent en une vidéo.</p>
+                <!-- Remplacez par votre photo -->
+                <video controls preload="metadata">
+                    <source src="video3.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+        <!-- Souvenir 7 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Ton Premier Anniversaire Ensemble</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>Birthday Date</h2>
+                <p>Le jour le plus important de l'année.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo6.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 8 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">The love of being annoying</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>My favorite hobby</h2>
+                <p>Qui aime bien chatie bien.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo7.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 9 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Nos 2 ans ensemble</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>Anniversary date</h2>
+                <p>Célébrons notre amour.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo8.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 10 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Toujours ensemble</span>
+                <span class="location">📍Artashavan</span>
+                <h2>La Dream Team</h2>
+                <p>Dans les bons comme dans les moins bons moments, on forme la meilleure équipe.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo9.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 11 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Notre premier printemps ensemble</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>Запах улиц Еревана</h2>
+                <p>Même la pluie est agréable avec toi.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo10.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 12 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Nos fiançailles</span>
+                <span class="location">📍 Zovuni</span>
+                <h2>On construit l'avenir</h2>
+                <p>Le premier pas vers demain, s'imaginer plus tard... avec toi tout semble possible et magnifique.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo11.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 13 aligné à gauche -->
+        <div class="memory fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">Getting Married</span>
+                <span class="location">📍 Yerevan</span>
+                <h2>On approche du but</h2>
+                <p>La dernière étape avant de mettre fin à la distance.</p>
+                <!-- Remplacez par votre photo -->
+                <img src="photo12.jpg" alt="Souvenir" loading="lazy">
+            </div>
+        </div>
+
+        <!-- Souvenir 14 aligné à droite -->
+        <div class="memory right fade-in-scroll">
+            <div class="memory-content">
+                <span class="date">La dernière ligne droite</span>
+                <span class="location">📍 Parakar</span>
+                <h2>La dernière fois qu'on se dit au revoir</h2>
+                <p>Prêts à écrire la suite de notre belle histoire ensemble.</p>
+                <!-- Remplacez par votre vidéo -->
+                <video controls preload="metadata">
+                    <source src="video4.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Galerie Photos -->
+    <section id="galerie" class="gallery">
+        <h2 class="section-title fade-in-scroll">Nos Meilleurs Moments</h2>
+        <div class="gallery-grid">
+            <img src="galerie1.jpg" alt="Souvenir" loading="lazy" class="fade-in-scroll" style="transition-delay: 0s;">
+            <img src="galerie2.jpg" alt="Souvenir" loading="lazy" class="fade-in-scroll" style="transition-delay: 0.15s;">
+            <img src="galerie3.jpg" alt="Souvenir" loading="lazy" class="fade-in-scroll" style="transition-delay: 0.3s;">
+            <img src="galerie4.jpg" alt="Souvenir" loading="lazy" class="fade-in-scroll" style="transition-delay: 0.45s;">
+            <img src="galerie5.jpg" alt="Souvenir" loading="lazy" class="fade-in-scroll" style="transition-delay: 0.6s;">
+            <img src="galerie6.jpg" alt="Souvenir" loading="lazy" class="fade-in-scroll" style="transition-delay: 0.75s;">
+        </div>
+    </section>
+
+    <!-- Lettre d'amour -->
+    <section id="lettre" class="letter-section fade-in-scroll">
+        <div class="letter-content">
+            <h2>Kyanqs,</h2>
+            <p>Vor mi qani shapat arach xosum einq u asecir vor petq a cuyc tam sers, es el im dzevn a ser cuyc talu.</p>
+            <p>Gitem vor shat djvarutyunneri mechov enq ancel u shat shnorhakal em vor imn es. Yerpeq chtoghes indz u yerpeq chmoranas vor anchap shat em sirum qez im Kes.</p>
+            <p class="signature">Qo Sevo ❤️</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>Je t'aime ❤️</p>
+    </footer>
+
+    <!-- Lightbox pour la galerie -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Aperçu en grand">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
